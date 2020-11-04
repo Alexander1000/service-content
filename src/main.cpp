@@ -59,8 +59,6 @@ int main(int argc, char** argv) {
     int newsockfd;
 
     while (1) {
-        std::cout << "Spawn worker" << std::endl;
-
         newsockfd = accept(server_sock, &cli_addr, (socklen_t*) &clilen);
 
         if (newsockfd < 0) {
@@ -69,7 +67,7 @@ int main(int argc, char** argv) {
 
         int pid = fork();
         if (pid == 0) {
-            std::cout << "Data" << std::endl;
+            std::cout << "Spawn worker" << std::endl;
 
             int maxBufferSize = 4096;
 
@@ -82,8 +80,6 @@ int main(int argc, char** argv) {
             int totalReceivBits = 0;
 
             while (strstr(requestMessage, "\r\n\r\n") == NULL) {
-                std::cout << "Iter" << std::endl;
-
                 int recvd = recv(newsockfd, buf, maxBufferSize, 0);
                 if (recvd < 0) {
                     std::cout << "Error while receiving data" << std::endl;
