@@ -114,16 +114,6 @@ int main(int argc, char** argv) {
 void on_request(char* request_raw, int socketfd) {
     std::cout << request_raw << std::endl;
 
-    /**
-     * HTTP/1.1 200 OK
-        Server: nginx/1.19.3
-        Date: Wed, 04 Nov 2020 11:33:57 GMT
-        Content-Type: text/html; charset=UTF-8
-        Connection: keep-alive
-        X-Powered-By: PHP/8.0.0rc1
-        Set-Cookie: s=9IJKSiseabbu.rptlTytfMp6mQ%3AhrpvcWlbUkkr-WX0m8YIj1QM.5IvZ5MguJaw2
-     */
-
     char* http_response = "HTTP/1.1 204 No Content\n";
     write(socketfd, http_response, sizeof(char) * strlen(http_response));
 
