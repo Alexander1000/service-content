@@ -13,4 +13,6 @@ COPY . /app
 
 WORKDIR /app
 
+RUN cmake . && make
+
 ENTRYPOINT ["/bin/bash"]
