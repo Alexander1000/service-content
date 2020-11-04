@@ -9,10 +9,19 @@
 #include <unistd.h>
 
 #include <iostream>
+#include <map>
 
 const short  SERVER_BACKLOG    = 128;
 
-void on_request(char* request_raw, int socketfd);
+class RequestHead
+{
+public:
+    char* method;
+    char* uri;
+    char* protocol;
+};
+
+void on_request(char* request_raw, int requestLength, int socketfd);
 
 int main(int argc, char** argv) {
     if (argc < 3) {
@@ -99,7 +108,7 @@ int main(int argc, char** argv) {
                 strcat(requestMessage, buf);
             }
 
-            on_request(requestMessage, newsockfd);
+            on_request(requestMessage, totalReceivBits, newsockfd);
 
             close(newsockfd);
             break;
@@ -111,8 +120,70 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void on_request(char* request_raw, int socketfd) {
+/**
+ * example:
+ * ====================
+ * POST /test HTTP/1.1
+ * Host: 127.0.0.1:50101
+ * Accept:
+ * User-Agent: curlik
+ * Content-Length: 6
+ * Content-Type: application/x-www-form-urlencoded
+ * ====================
+ * @param request_raw
+ * @param requestLength
+ * @return
+ */
+std::map<std::string, std::string>* parse_headers(char* request_raw, int requestLength) {
+    std::map<std::string, std::string>* headers;
+    headers = new std::map<std::string, std::string>;
+
+    int start_pos_header_name = 0;
+
+    for (int i = 0; i < requestLength; i++) {
+
+    }
+
+    return headers;
+}
+
+/**
+ * @example: POST /test HTTP/1.1
+ * @param request_raw
+ * @param requestLength
+ */
+RequestHead* parse_head(char* request_raw, int requestLength) {
+    int i = 0;
+    while (request_raw[i++] != ' ') {}
+
+    char* method;
+    method = new char[i];
+    memset(method, 0, sizeof(char) * i);
+    memcpy(method, request_raw, sizeof(char) * i);
+
+    int start = i;
+    while (request_raw[i++] != ' ') {}
+    char* uri;
+    uri = new char[i - start];
+    memset(uri, 0, sizeof(char) * (i - start));
+    memcpy(uri, request_raw + start, sizeof(char) * (i - start));
+
+    start = i;
+    while (request_raw[i++] != '\n') {}
+    char* protocol;
+    protocol = new char[i - start];
+    memset(protocol, 0, sizeof(char) * (i - start));
+    memcpy(protocol, request_raw + start, sizeof(char) * (i - start));
+
+    RequestHead* r;
+    r = new RequestHead();
+    return r;
+}
+
+void on_request(char* request_raw, int requestLength, int socketfd) {
     std::cout << request_raw << std::endl;
+
+    parse_head(request_raw, requestLength);
 
     char* http_response = "HTTP/1.1 204 No Content\n";
     write(socketfd, http_response, sizeof(char) * strlen(http_response));
