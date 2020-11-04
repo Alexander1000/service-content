@@ -14,18 +14,7 @@ include_directories(
     /usr/local/include
 )
 
-find_library(LIBEVENT libevent.a)
-message(STATUS "Found libevent library: ${LIBEVENT}")
-
-find_library(LIBEVENT_CORE libevent_core.a)
-message(STATUS "Found libevent-core library: ${LIBEVENT_CORE}")
-
 add_executable(
     ${PROJECT_NAME} src/main.cpp
     ${SRV_CONTENT_SOURCES}
-)
-
-target_link_libraries(${PROJECT_NAME}
-    ${LIBEVENT}
-    ${LIBEVENT_CORE}
 )
