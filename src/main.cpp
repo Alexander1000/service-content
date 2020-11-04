@@ -12,6 +12,8 @@
 
 const short  SERVER_BACKLOG    = 128;
 
+void on_request(char* request_raw, int socketfd);
+
 int main(int argc, char** argv) {
     if (argc < 3) {
         std::cout << "Start as:" << std::endl
@@ -101,7 +103,7 @@ int main(int argc, char** argv) {
                 strcat(requestMessage, buf);
             }
 
-            std::cout << requestMessage << std::endl;
+            on_request(requestMessage, newsockfd);
 
             close(newsockfd);
             break;
@@ -111,4 +113,26 @@ int main(int argc, char** argv) {
     close(server_sock);
 
     return 0;
+}
+
+void on_request(char* request_raw, int socketfd) {
+    std::cout << request_raw << std::endl;
+
+    /**
+     * HTTP/1.1 200 OK
+        Server: nginx/1.19.3
+        Date: Wed, 04 Nov 2020 11:33:57 GMT
+        Content-Type: text/html; charset=UTF-8
+        Connection: keep-alive
+        X-Powered-By: PHP/8.0.0rc1
+        Set-Cookie: s=9IJKSiseabbu.rptlTytfMp6mQ%3AhrpvcWlbUkkr-WX0m8YIj1QM.5IvZ5MguJaw2
+     */
+
+    char* http_response = "HTTP/1.1 204 No Content\n";
+    write(socketfd, http_response, sizeof(char) * strlen(http_response));
+
+    char* http_server = "Server: service-content/1.0.0\n";
+    write(socketfd, http_server, sizeof(char) * strlen(http_server));
+
+    write(socketfd, "\n\r\n\r", sizeof(char) * 8);
 }
