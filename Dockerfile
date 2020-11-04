@@ -15,4 +15,4 @@ WORKDIR /app
 
 RUN cmake . && make
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/app/service-content"]
