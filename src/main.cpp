@@ -9,6 +9,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include <unistd.h>
+
 #include <iostream>
 
 const short  SERVER_BACKLOG    = 128;
@@ -34,6 +36,7 @@ int main(int argc, char** argv) {
     u_short      port  = atol(argv[2]);
     const char * host  = argv[1];
     sockaddr_in  sa;
+    bzero(&sa, sizeof(sa));
     int          on    = 1;
     sa.sin_family      = AF_INET;
     sa.sin_port        = htons(port);
@@ -56,27 +59,90 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Init events
-    event_base * serv_base   = (event_base *)event_init();
-    evhttp     * http_server = evhttp_new(serv_base);
+    int clilen = sizeof(struct sockaddr);
+    struct sockaddr cli_addr;
 
-    // Ignore SIGPIPE
-    signal(SIGPIPE, SIG_IGN);
+    int newsockfd;
 
-    if (evhttp_accept_socket(http_server, server_sock) == -1) {
-        std::cout << "Error evhttp_accept_socket(): " << strerror(errno) << std::endl;
-        return 1;
+    while (1) {
+        std::cout << "Spawn worker" << std::endl;
+
+        newsockfd = accept(server_sock, &cli_addr, (socklen_t*) &clilen);
+
+        if (newsockfd < 0) {
+            std::cout << "Error! On Accepting Request! i.e. requests limit crossed" << std::endl;
+        }
+
+        int pid = fork();
+        if (pid == 0) {
+            std::cout << "Data" << std::endl;
+
+            int maxBufferSize = 4096;
+
+            char buf[maxBufferSize];
+            memset(buf, 0, maxBufferSize * sizeof(char));
+
+            char* requestMessage = (char*) malloc(maxBufferSize);
+            requestMessage[0] = '\0';
+
+            int totalReceivBits = 0;
+
+            while (strstr(requestMessage, "\r\n\r\n") == NULL) {
+                std::cout << "Iter" << std::endl;
+
+                int recvd = recv(newsockfd, buf, maxBufferSize, 0);
+                if (recvd < 0) {
+                    std::cout << "Error while receiving data" << std::endl;
+                    return 2;
+                } else if (recvd == 0) {
+                    break;
+                } else {
+                    totalReceivBits += recvd;
+
+                    buf[recvd] = '\0';
+                    if (totalReceivBits > maxBufferSize) {
+                        maxBufferSize *= 2;
+                        requestMessage = (char*) realloc(requestMessage, maxBufferSize);
+                    }
+                }
+
+                strcat(requestMessage, buf);
+            }
+
+            std::cout << requestMessage << std::endl;
+
+            close(newsockfd);
+            break;
+        } else {
+//            close(newsockfd);
+//            std::cout << "Close" << std::endl;
+//            break;
+        }
     }
 
-    std::cout << "Server: " << argv[1] << ":" << argv[2] << std::endl;
+    close(server_sock);
 
-    evhttp_set_cb(http_server, "/news", on_request, NULL);
-
-    // Set HTTP request callback
-    evhttp_set_gencb(http_server, on_request, NULL);
-
-    // Dispatch events
-    event_base_dispatch(serv_base);
+//    // Init events
+//    event_base * serv_base   = (event_base *)event_init();
+//    evhttp     * http_server = evhttp_new(serv_base);
+//
+//    // Ignore SIGPIPE
+//    signal(SIGPIPE, SIG_IGN);
+//
+//    if (evhttp_accept_socket(http_server, server_sock) == -1) {
+//        std::cout << "Error evhttp_accept_socket(): " << strerror(errno) << std::endl;
+//        return 1;
+//    }
+//
+//    std::cout << "Server: " << argv[1] << ":" << argv[2] << std::endl;
+//
+//    evhttp_set_cb(http_server, "/news", on_request, NULL);
+//
+//    // Set HTTP request callback
+//    evhttp_set_gencb(http_server, on_request, NULL);
+//
+//    // Dispatch events
+//    event_base_dispatch(serv_base);
 
     return 0;
 }
