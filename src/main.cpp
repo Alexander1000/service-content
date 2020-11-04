@@ -16,6 +16,12 @@ const short  SERVER_BACKLOG    = 128;
 class RequestHead
 {
 public:
+    RequestHead(char* method, char* uri, char* protocol) {
+        this->method = method;
+        this->uri = uri;
+        this->protocol = protocol;
+    }
+protected:
     char* method;
     char* uri;
     char* protocol;
@@ -150,9 +156,8 @@ std::map<std::string, std::string>* parse_headers(char* request_raw, int request
 /**
  * @example: POST /test HTTP/1.1
  * @param request_raw
- * @param requestLength
  */
-RequestHead* parse_head(char* request_raw, int requestLength) {
+RequestHead* parse_head(char* request_raw) {
     int i = 0;
     while (request_raw[i++] != ' ') {}
 
@@ -176,14 +181,16 @@ RequestHead* parse_head(char* request_raw, int requestLength) {
     memcpy(protocol, request_raw + start, sizeof(char) * (i - start));
 
     RequestHead* r;
-    r = new RequestHead();
+    r = new RequestHead(method, uri, protocol);
     return r;
 }
 
 void on_request(char* request_raw, int requestLength, int socketfd) {
     std::cout << request_raw << std::endl;
 
-    parse_head(request_raw, requestLength);
+    RequestHead* r = parse_head(request_raw);
+
+    std::map<std::string, std::string>* headers = parse_headers(request_raw, requestLength);
 
     char* http_response = "HTTP/1.1 204 No Content\n";
     write(socketfd, http_response, sizeof(char) * strlen(http_response));
