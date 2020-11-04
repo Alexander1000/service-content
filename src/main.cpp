@@ -144,11 +144,26 @@ std::map<std::string, std::string>* parse_headers(char* request_raw, int request
     std::map<std::string, std::string>* headers;
     headers = new std::map<std::string, std::string>;
 
-    int start_pos_header_name = 0;
+    // skip head of request
+    int i = 0;
+    while (request_raw[i++] != '\n') {}
 
-    for (int i = 0; i < requestLength; i++) {
+    int start_pos_header_value = 0;
 
-    }
+    int start_pos_header_name = i;
+    int j = start_pos_header_name;
+    while (request_raw[j++] != ':') {}
+    char* header_name;
+    header_name = new char[j - start_pos_header_name];
+    memset(header_name, 0, sizeof(char) * (j - start_pos_header_name));
+    memcpy(header_name, request_raw + start_pos_header_name, sizeof(char) * (j - start_pos_header_name));
+    j++; // skip space
+    start_pos_header_value = j;
+    while (request_raw[j++] != '\n') {}
+    char* header_value;
+    header_value = new char[j - start_pos_header_value];
+    memset(header_value, 0, sizeof(char) * (j - start_pos_header_value));
+    memcpy(header_value, request_raw + start_pos_header_value, sizeof(char) * (j - start_pos_header_value));
 
     return headers;
 }
