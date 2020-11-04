@@ -165,6 +165,8 @@ std::map<std::string, std::string>* parse_headers(char* request_raw, int request
     memset(header_value, 0, sizeof(char) * (j - start_pos_header_value));
     memcpy(header_value, request_raw + start_pos_header_value, sizeof(char) * (j - start_pos_header_value));
 
+    (*headers)[std::string(header_name)] = std::string(header_value);
+
     return headers;
 }
 
