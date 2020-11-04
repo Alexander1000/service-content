@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <signal.h>
+#include <string.h>
 
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -69,7 +70,7 @@ int main(int argc, char** argv) {
 
     std::cout << "Server: " << argv[1] << ":" << argv[2] << std::endl;
 
-    // evhttp_set_cb(http_server, "/news", on_request_news, NULL);
+    evhttp_set_cb(http_server, "/news", on_request, NULL);
 
     // Set HTTP request callback
     evhttp_set_gencb(http_server, on_request, NULL);
