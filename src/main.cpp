@@ -172,8 +172,6 @@ std::map<std::string, std::string>* parse_headers(char* request_raw, int request
 
         cur_pos = j - 1;
 
-        std::cout << header_name << ": " << header_value << std::endl;
-
         if (request_raw[cur_pos] == '\n' && request_raw[cur_pos + 1] == '\r') {
             break;
         }
