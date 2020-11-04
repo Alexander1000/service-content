@@ -1,1 +1,8 @@
 .idea
+cmake-build-debug
+CMakeFiles
+CMakeCache.txt
+Makefile
+service-content
+service-content.cbp
+cmake_install.cmake
