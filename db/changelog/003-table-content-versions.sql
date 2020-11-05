@@ -4,7 +4,7 @@ create table content_versions(
     title character varying,
     text character varying,
     user_id integer not null,
-    created_at timestamp with time zone,
+    created_at timestamp with time zone default now(),
     version integer not null,
     constraint content_versions_id_pkey primary key (id)
 );
@@ -17,3 +17,5 @@ CREATE SEQUENCE content_versions_id_seq
     CACHE 1;
 
 ALTER TABLE ONLY content_versions ALTER COLUMN id SET DEFAULT nextval('content_versions_id_seq'::regclass);
+
+create unique index content_versions_ux on content_versions (content_id, version);
