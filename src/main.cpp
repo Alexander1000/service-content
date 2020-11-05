@@ -228,7 +228,7 @@ void on_request(char* request_raw, int requestLength, int socketfd) {
     std::map<std::string, std::string>* headers = parse_headers(request_raw, requestLength);
 
     // PGconn* pg_conn = PQconnectdb("postgres://service_users_0@127.0.0.1:5432/service_users");
-    pqxx::connection c{"postgres://service_users_0@127.0.0.1:5432/service_users"};
+    pqxx::connection c{"postgres://service_users_0@database:5432/service_users"};
 
     pqxx::work txn{c};
 
