@@ -7,6 +7,7 @@ project(service-content)
 
 set(SRV_CONTENT_SOURCES
     src/main.cpp
+    src/storage.cpp
 )
 
 include_directories(

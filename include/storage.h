@@ -1,0 +1,3 @@
+#ifndef SRV_CONTENT_STORAGE_H
+#define SRV_CONTENT_STORAGE_H
+#endif

@@ -13,6 +13,8 @@
 
 #include <pqxx/pqxx>
 
+#include <storage.h>
+
 const short  SERVER_BACKLOG    = 128;
 
 class RequestHead
