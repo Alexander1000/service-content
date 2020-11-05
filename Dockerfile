@@ -7,7 +7,8 @@ RUN apt-get update \
         make \
         libpqxx-6.2 \
         libpqxx-dev \
-        libpqxx-doc
+        libpqxx-doc \
+        libpq-dev
 
 COPY . /app
 

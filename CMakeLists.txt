@@ -14,10 +14,15 @@ include_directories(
     /usr/local/include
 )
 
-find_library(LIBPQ libpq.a)
+link_directories(
+    /usr/local/lib/
+    /usr/local/lib/postgresql/
+)
+
+find_library(LIBPQ libpq.so)
 message(STATUS "Found libpq: ${LIBPQ}")
 
-find_library(LIBPQXX libpqxx.a)
+find_library(LIBPQXX libpqxx.so)
 message(STATUS "Found libpqxx: ${LIBPQXX}")
 
 add_executable(
