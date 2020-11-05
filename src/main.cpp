@@ -11,6 +11,8 @@
 #include <iostream>
 #include <map>
 
+#include <pqxx/pqxx>
+
 const short  SERVER_BACKLOG    = 128;
 
 class RequestHead
@@ -224,6 +226,15 @@ void on_request(char* request_raw, int requestLength, int socketfd) {
     RequestHead* r = parse_head(request_raw);
 
     std::map<std::string, std::string>* headers = parse_headers(request_raw, requestLength);
+
+    // PGconn* pg_conn = PQconnectdb("postgres://service_users_0@127.0.0.1:5432/service_users");
+    pqxx::connection c{"postgres://service_users_0@127.0.0.1:5432/service_users"};
+
+    pqxx::work txn{c};
+
+    txn.exec0("insert into users(status_id, created_at) values (1, now())");
+
+    txn.commit();
 
     char* http_response = "HTTP/1.1 204 No Content\n";
     write(socketfd, http_response, sizeof(char) * strlen(http_response));

@@ -14,7 +14,18 @@ include_directories(
     /usr/local/include
 )
 
+find_library(LIBPQ libpq.a)
+message(STATUS "Found libpq: ${LIBPQ}")
+
+find_library(LIBPQXX libpqxx.a)
+message(STATUS "Found libpqxx: ${LIBPQXX}")
+
 add_executable(
     ${PROJECT_NAME} src/main.cpp
     ${SRV_CONTENT_SOURCES}
+)
+
+target_link_libraries(${PROJECT_NAME}
+    ${LIBPQ}
+    ${LIBPQXX}
 )

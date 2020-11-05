@@ -4,7 +4,10 @@ RUN apt-get update \
     && apt-get install -y \
         g++ \
         cmake \
-        make
+        make \
+        libpqxx-6.2 \
+        libpqxx-dev \
+        libpqxx-doc
 
 COPY . /app
 
