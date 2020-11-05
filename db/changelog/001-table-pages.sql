@@ -5,3 +5,12 @@ create table pages (
     created_at timestamp with time zone,
     constraint pages_id_pkey primary key (id)
 );
+
+CREATE SEQUENCE pages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
