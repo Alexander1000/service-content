@@ -1,7 +1,6 @@
 #include <pqxx/pqxx>
 #include <srv-content/storage.h>
 #include <srv-content/connection.h>
-#include <iostream>
 
 namespace Content
 {
