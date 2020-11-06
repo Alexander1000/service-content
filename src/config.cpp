@@ -11,6 +11,13 @@ namespace Content
     {
         this->is_help = false;
 
+        // set defaults
+        this->db_host = "127.0.0.1";
+        this->db_port = 5432;
+        this->db_user = "postgres";
+        this->db_password = nullptr;
+        this->db_name = "postgres";
+
         for (int i = 1; i < argc; i++) {
             std::string paramName(argv[i]);
 
@@ -63,6 +70,53 @@ namespace Content
                         if (ePort->getType() == ELEMENT_TYPE_NUMERIC) {
                             std::string *sPort = (std::string*) ePort->getData();
                             this->port = atoi(sPort->c_str());
+                        }
+                    }
+                }
+            }
+
+            if (obj->find("database") != obj->end()) {
+                JsonStreamAnalyzer::Element* databaseConfig = obj->at("database");
+                if (databaseConfig->getType() == ELEMENT_TYPE_OBJECT) {
+                    auto databaseConfigObj = (JsonObject*) databaseConfig->getData();
+
+                    if (databaseConfigObj->find("host") != databaseConfigObj->end()) {
+                        JsonStreamAnalyzer::Element* elDbHost = databaseConfigObj->at("host");
+                        if (elDbHost->getType() == ELEMENT_TYPE_TEXT) {
+                            auto dbHost = (std::string*) elDbHost->getData();
+                            this->db_host = *dbHost;
+                        }
+                    }
+
+                    if (databaseConfigObj->find("port") != databaseConfigObj->end()) {
+                        JsonStreamAnalyzer::Element* elDbPort = databaseConfigObj->at("port");
+                        if (elDbPort->getType() == ELEMENT_TYPE_NUMERIC) {
+                            auto dbPort = (std::string*) elDbPort->getData();
+                            this->db_port = atoi(dbPort->c_str());
+                        }
+                    }
+
+                    if (databaseConfigObj->find("user") != databaseConfigObj->end()) {
+                        JsonStreamAnalyzer::Element* elDbUser = databaseConfigObj->at("user");
+                        if (elDbUser->getType() == ELEMENT_TYPE_TEXT) {
+                            auto dbUser = (std::string*) elDbUser->getData();
+                            this->db_user = *dbUser;
+                        }
+                    }
+
+                    if (databaseConfigObj->find("password") != databaseConfigObj->end()) {
+                        JsonStreamAnalyzer::Element* elDbPassword = databaseConfigObj->at("password");
+                        if (elDbPassword->getType() == ELEMENT_TYPE_TEXT) {
+                            auto dbPassword = (std::string*) elDbPassword->getData();
+                            this->db_password = dbPassword;
+                        }
+                    }
+
+                    if (databaseConfigObj->find("name") != databaseConfigObj->end()) {
+                        JsonStreamAnalyzer::Element* elDbName = databaseConfigObj->at("name");
+                        if (elDbName->getType() == ELEMENT_TYPE_TEXT) {
+                            auto dbName = (std::string*) elDbName->getData();
+                            this->db_name = *dbName;
                         }
                     }
                 }

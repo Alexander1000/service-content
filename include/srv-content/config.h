@@ -17,10 +17,14 @@ namespace Content
         bool isHelp();
     private:
         bool is_help;
-
         std::string listen;
-
         int port;
+
+        std::string db_host;
+        int db_port;
+        std::string db_user;
+        std::string* db_password;
+        std::string db_name;
 
         void parse_config_file(std::string file_name);
     };

@@ -8,6 +8,6 @@
     "port": 5432,
     "user": "service_content_0",
     "password": null,
-    "dbname": "service_content"
+    "name": "service_content"
   }
 }
