@@ -8,6 +8,7 @@ project(service-content)
 set(SRV_CONTENT_SOURCES
     src/main.cpp
     src/storage.cpp
+    src/connection.cpp
 )
 
 include_directories(

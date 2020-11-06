@@ -13,7 +13,7 @@
 
 #include <pqxx/pqxx>
 
-#include <storage.h>
+#include <srv-content/storage.h>
 
 const short  SERVER_BACKLOG    = 128;
 
