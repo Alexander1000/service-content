@@ -14,9 +14,13 @@ namespace Content
 
     pqxx::connection* DBConn::get_conn()
     {
-        char* conn_str = new char[128];
-        memset(conn_str, 0, sizeof(char) * 128);
-        sprintf(conn_str, "postgres://%s@%s:%d/%s", this->db_user, this->host, this->port, this->db_name);
-        return new pqxx::connection(conn_str);
+        if (this->conn == nullptr) {
+            char *conn_str = new char[128];
+            memset(conn_str, 0, sizeof(char) * 128);
+            sprintf(conn_str, "postgres://%s@%s:%d/%s", this->db_user, this->host, this->port, this->db_name);
+            this->conn = new pqxx::connection(conn_str);
+        }
+
+        return this->conn;
     }
 }

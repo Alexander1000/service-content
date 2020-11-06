@@ -15,6 +15,8 @@ namespace Content
         char* db_user;
         char* db_password;
         char* db_name;
+
+        pqxx::connection* conn;
     };
 }
 
