@@ -69,4 +69,12 @@ namespace Content
             }
         }
     }
+
+    int Config::get_port() {
+        return this->port;
+    }
+
+    std::string Config::get_listen() {
+        return this->listen;
+    }
 }

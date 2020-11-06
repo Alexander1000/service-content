@@ -2,7 +2,7 @@ version: "3.8"
 services:
   backend:
     image: dankovtsev.pro:5000/service-content
-    command: ["0.0.0.0", "50101"]
+    command: ["-c", "./etc/config.local.json"]
     ports:
       - "50101:50101"
     networks:

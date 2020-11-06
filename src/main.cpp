@@ -11,8 +11,8 @@
 #include <iostream>
 #include <map>
 
-#include <pqxx/pqxx>
 
+#include <srv-content/config.h>
 #include <srv-content/storage.h>
 #include <srv-content/connection.h>
 
@@ -35,11 +35,7 @@ protected:
 void on_request(char* request_raw, int requestLength, int socketfd);
 
 int main(int argc, char** argv) {
-    if (argc < 3) {
-        std::cout << "Start as:" << std::endl
-                  << argv[0] << " host_address port" << std::endl;
-        return 1;
-    }
+    Content::Config config(argc, argv);
 
     int server_sock = socket(AF_INET, SOCK_STREAM, 0);
     if (server_sock == -1) {
@@ -47,8 +43,8 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    u_short      port  = atol(argv[2]);
-    const char * host  = argv[1];
+    u_short      port  = config.get_port();
+    const char * host  = config.get_listen().c_str();
     sockaddr_in  sa;
     bzero(&sa, sizeof(sa));
     int          on    = 1;
