@@ -49,6 +49,16 @@ namespace Content
 
         txn.exec0(query);
 
+        memset(query, 0, sizeof(char) * 1024);
+        sprintf(
+            query,
+            "update content set version = %d where id = %d",
+            version,
+            *content_id
+        );
+
+        txn.exec0(query);
+
         txn.commit();
     }
 }
