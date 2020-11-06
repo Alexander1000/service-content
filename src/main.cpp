@@ -28,7 +28,7 @@ public:
         this->uri = uri;
         this->protocol = protocol;
     }
-protected:
+
     char* method;
     char* uri;
     char* protocol;
@@ -226,12 +226,35 @@ RequestHead* parse_head(char* request_raw) {
     return r;
 }
 
+void on_request_v1_save(RequestHead* r, char* request_raw, int requestLength, int socketfd) {
+    std::cout << "/v1/save called" << std::endl;
+
+    std::string http_response = "HTTP/1.1 204 No Content\n";
+    write(socketfd, http_response.c_str(), sizeof(char) * http_response.length());
+
+    std::string http_server = "Server: service-content/1.0.0\n";
+    write(socketfd, http_server.c_str(), sizeof(char) * http_server.length());
+
+    write(socketfd, "\n\r\n\r", sizeof(char) * 8);
+}
+
 void on_request(char* request_raw, int requestLength, int socketfd) {
     std::cout << request_raw << std::endl;
 
     RequestHead* r = parse_head(request_raw);
 
     std::map<std::string, std::string>* headers = parse_headers(request_raw, requestLength);
+
+    std::string method(r->method);
+    std::string uri(r->uri);
+
+    std::cout << "URI: [" << uri << "]" << std::endl;
+    std::cout << "Method: [" << method << "]" << std::endl;
+
+    if (uri == "/v1/save" && method == "POST") {
+        on_request_v1_save(r, request_raw, requestLength, socketfd);
+        return;
+    }
 
     Content::DBConn db_conn(
         config->getDbHost(),
