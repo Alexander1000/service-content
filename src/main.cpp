@@ -245,11 +245,11 @@ void on_request(char* request_raw, int requestLength, int socketfd) {
 
     // txn.commit();
 
-    char* http_response = "HTTP/1.1 204 No Content\n";
-    write(socketfd, http_response, sizeof(char) * strlen(http_response));
+    std::string http_response = "HTTP/1.1 204 No Content\n";
+    write(socketfd, http_response.c_str(), sizeof(char) * http_response.length());
 
-    char* http_server = "Server: service-content/1.0.0\n";
-    write(socketfd, http_server, sizeof(char) * strlen(http_server));
+    std::string http_server = "Server: service-content/1.0.0\n";
+    write(socketfd, http_server.c_str(), sizeof(char) * http_server.length());
 
     write(socketfd, "\n\r\n\r", sizeof(char) * 8);
 }
