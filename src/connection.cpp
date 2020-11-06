@@ -3,13 +3,13 @@
 
 namespace Content
 {
-    DBConn::DBConn(const char *host, int port, const char *db_user, const char *db_password, const char *db_name)
+    DBConn::DBConn(std::string host, int port, std::string db_user, std::string* db_password, std::string db_name)
     {
-        this->host = (char*) host;
+        this->host = host;
         this->port = port;
-        this->db_user = (char*) db_user;
-        this->db_password = (char*) db_password;
-        this->db_name = (char*) db_name;
+        this->db_user = db_user;
+        this->db_password = db_password;
+        this->db_name = db_name;
 
         this->conn = nullptr;
     }
@@ -19,7 +19,26 @@ namespace Content
         if (this->conn == nullptr) {
             char *conn_str = new char[128];
             memset(conn_str, 0, sizeof(char) * 128);
-            sprintf(conn_str, "postgres://%s@%s:%d/%s", this->db_user, this->host, this->port, this->db_name);
+            if (this->db_password == nullptr) {
+                sprintf(
+                    conn_str,
+                    "postgres://%s@%s:%d/%s",
+                    this->db_user.c_str(),
+                    this->host.c_str(),
+                    this->port,
+                    this->db_name.c_str()
+                );
+            } else {
+                sprintf(
+                        conn_str,
+                        "postgres://%s:%s@%s:%d/%s",
+                        this->db_user.c_str(),
+                        this->db_password->c_str(),
+                        this->host.c_str(),
+                        this->port,
+                        this->db_name.c_str()
+                );
+            }
             this->conn = new pqxx::connection(conn_str);
         }
 

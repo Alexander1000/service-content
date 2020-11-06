@@ -135,4 +135,24 @@ namespace Content
     bool Config::isHelp() {
         return this->is_help;
     }
+
+    std::string Config::getDbHost() {
+        return this->db_host;
+    }
+
+    int Config::getDbPort() {
+        return this->db_port;
+    }
+
+    std::string Config::getDbUser() {
+        return this->db_user;
+    }
+
+    std::string* Config::getDbPassword() {
+        return this->db_password;
+    }
+
+    std::string Config::getDbName() {
+        return this->db_name;
+    }
 }

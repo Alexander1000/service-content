@@ -12,9 +12,18 @@ namespace Content
     {
     public:
         Config(int argc, char **argv);
+
         int get_port();
         std::string get_listen();
+
         bool isHelp();
+
+        std::string getDbHost();
+        int getDbPort();
+        std::string getDbUser();
+        std::string* getDbPassword();
+        std::string getDbName();
+
     private:
         bool is_help;
         std::string listen;

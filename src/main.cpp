@@ -18,6 +18,8 @@
 
 const short  SERVER_BACKLOG    = 128;
 
+Content::Config* config = nullptr;
+
 class RequestHead
 {
 public:
@@ -35,9 +37,9 @@ protected:
 void on_request(char* request_raw, int requestLength, int socketfd);
 
 int main(int argc, char** argv) {
-    Content::Config config(argc, argv);
+    config = new Content::Config(argc, argv);
 
-    if (config.isHelp()) {
+    if (config->isHelp()) {
         std::cout << "It is help message" << std::endl;
         return 0;
     }
@@ -48,8 +50,8 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    u_short      port  = config.get_port();
-    const char * host  = config.get_listen().c_str();
+    u_short      port  = config->get_port();
+    const char * host  = config->get_listen().c_str();
     sockaddr_in  sa;
     bzero(&sa, sizeof(sa));
     int          on    = 1;
@@ -231,7 +233,13 @@ void on_request(char* request_raw, int requestLength, int socketfd) {
 
     std::map<std::string, std::string>* headers = parse_headers(request_raw, requestLength);
 
-    Content::DBConn db_conn("database", 5432, "service_content_0", nullptr, "service_content");
+    Content::DBConn db_conn(
+        config->getDbHost(),
+        config->getDbPort(),
+        config->getDbUser(),
+        config->getDbPassword(),
+        config->getDbName()
+    );
     Content::Storage s(&db_conn);
 
     int content_id = 7;
