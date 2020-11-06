@@ -205,14 +205,14 @@ RequestHead* parse_head(char* request_raw) {
     char* method;
     method = new char[i];
     memset(method, 0, sizeof(char) * i);
-    memcpy(method, request_raw, sizeof(char) * i);
+    memcpy(method, request_raw, sizeof(char) * (i - 1));
 
     int start = i;
     while (request_raw[i++] != ' ') {}
     char* uri;
     uri = new char[i - start];
     memset(uri, 0, sizeof(char) * (i - start));
-    memcpy(uri, request_raw + start, sizeof(char) * (i - start));
+    memcpy(uri, request_raw + start, sizeof(char) * (i - start - 1));
 
     start = i;
     while (request_raw[i++] != '\n') {}
