@@ -10,6 +10,8 @@ namespace Content
         this->db_user = (char*) db_user;
         this->db_password = (char*) db_password;
         this->db_name = (char*) db_name;
+
+        this->conn = nullptr;
     }
 
     pqxx::connection* DBConn::get_conn()
