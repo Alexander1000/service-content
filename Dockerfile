@@ -1,10 +1,6 @@
-FROM debian:buster-20201012
+FROM dankovtsev.pro:5000/utils/cpp:latest
 
-RUN apt-get update \
-    && apt-get install -y \
-        g++ \
-        cmake \
-        make \
+RUN apt-get install -y \
         libpqxx-6.2 \
         libpqxx-dev \
         libpqxx-doc \
