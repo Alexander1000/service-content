@@ -37,6 +37,11 @@ void on_request(char* request_raw, int requestLength, int socketfd);
 int main(int argc, char** argv) {
     Content::Config config(argc, argv);
 
+    if (config.isHelp()) {
+        std::cout << "It is help message" << std::endl;
+        return 0;
+    }
+
     int server_sock = socket(AF_INET, SOCK_STREAM, 0);
     if (server_sock == -1) {
         std::cout << "Error socket(): " << strerror(errno) << std::endl;

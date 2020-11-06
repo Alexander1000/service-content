@@ -77,4 +77,8 @@ namespace Content
     std::string Config::get_listen() {
         return this->listen;
     }
+
+    bool Config::isHelp() {
+        return this->is_help;
+    }
 }

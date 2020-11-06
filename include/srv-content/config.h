@@ -14,6 +14,7 @@ namespace Content
         Config(int argc, char **argv);
         int get_port();
         std::string get_listen();
+        bool isHelp();
     private:
         bool is_help;
 
