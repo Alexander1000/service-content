@@ -9,6 +9,7 @@ set(SRV_CONTENT_SOURCES
     src/main.cpp
     src/storage.cpp
     src/connection.cpp
+    src/config.cpp
 )
 
 include_directories(
