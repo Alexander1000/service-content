@@ -233,7 +233,8 @@ void on_request(char* request_raw, int requestLength, int socketfd) {
     Content::DBConn db_conn("database", 5432, "service_content_0", nullptr, "service_content");
     Content::Storage s(&db_conn);
 
-    s.save_content(nullptr, (char*) "test title", (char*) "text of content", 1);
+    int content_id = 7;
+    s.save_content(&content_id, (char*) "test title", (char*) "text of content", 1);
 
     // PGconn* pg_conn = PQconnectdb("postgres://service_users_0@127.0.0.1:5432/service_users");
     // pqxx::connection c{"postgres://service_users_0@database:5432/service_users"};
