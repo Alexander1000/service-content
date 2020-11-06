@@ -28,10 +28,23 @@ namespace Content
         } else {
             char* query = new char[128];
             memset(query, 0, sizeof(char) * 128);
-            sprintf(query, "select version from content where id = %d", *content_id);
+            sprintf(
+                query,
+                "select max(c.version), max(cv.version) "
+                "from content c "
+                "left join content_versions cv on c.id = cv.content_id "
+                "where c.id = %d",
+                *content_id
+            );
             pqxx::row r = txn.exec1(query);
             auto column = r.begin();
             version = column.as<int>(); // current version
+
+            column++;
+            int max_version = column.as<int>();
+            if (max_version > version) {
+                version = max_version;
+            }
             version++; // new version
         }
 
