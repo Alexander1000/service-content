@@ -30,13 +30,13 @@ namespace Content
                 );
             } else {
                 sprintf(
-                        conn_str,
-                        "postgres://%s:%s@%s:%d/%s",
-                        this->db_user.c_str(),
-                        this->db_password->c_str(),
-                        this->host.c_str(),
-                        this->port,
-                        this->db_name.c_str()
+                    conn_str,
+                    "postgres://%s:%s@%s:%d/%s",
+                    this->db_user.c_str(),
+                    this->db_password->c_str(),
+                    this->host.c_str(),
+                    this->port,
+                    this->db_name.c_str()
                 );
             }
             this->conn = new pqxx::connection(conn_str);
