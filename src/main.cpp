@@ -47,7 +47,7 @@ void on_request_v1_save(Socketer::Request* request, int socket) {
     std::string http_server = "Server: service-content/1.0.0\r\n";
     write(socket, http_server.c_str(), sizeof(char) * http_server.length());
 
-    write(socket, "\r\n\r\n", sizeof(char) * 8);
+    write(socket, "\r\n\r\n", sizeof(char) * 4);
 }
 
 void on_request(Socketer::Request* request, int socket) {
@@ -77,5 +77,5 @@ void on_request(Socketer::Request* request, int socket) {
     std::string http_server = "Server: service-content/1.0.0\r\n";
     write(socket, http_server.c_str(), sizeof(char) * http_server.length());
 
-    write(socket, "\r\n\r\n", sizeof(char) * 8);
+    write(socket, "\r\n\r\n", sizeof(char) * 4);
 }
