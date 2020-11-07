@@ -34,6 +34,9 @@ message(STATUS "Found json-stream-analyzer library: ${JSON_STREAM_ANALYZER}")
 find_library(IO_BUFFER libio-buffer.a)
 message(STATUS "Found io-buffer library: ${IO_BUFFER}")
 
+find_library(SOCKETER libsocketer.a)
+message(STATUS "Found socketer library: ${SOCKETER}")
+
 add_executable(
     ${PROJECT_NAME} src/main.cpp
     ${SRV_CONTENT_SOURCES}
@@ -44,4 +47,5 @@ target_link_libraries(${PROJECT_NAME}
     ${LIBPQXX}
     ${JSON_STREAM_ANALYZER}
     ${IO_BUFFER}
+    ${SOCKETER}
 )
