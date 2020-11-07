@@ -39,6 +39,8 @@ int main(int argc, char** argv) {
 void on_request_v1_save(Socketer::Request* request, int socket) {
     std::cout << "/v1/save called" << std::endl;
 
+    std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
+
     std::string http_response = "HTTP/1.1 204 No Content\n";
     write(socket, http_response.c_str(), sizeof(char) * http_response.length());
 
