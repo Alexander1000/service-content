@@ -19,11 +19,11 @@ int main(int argc, char** argv) {
 
     // initialize DB
     Content::DBConn db_conn(
-            config->getDbHost(),
-            config->getDbPort(),
-            config->getDbUser(),
-            config->getDbPassword(),
-            config->getDbName()
+        config->getDbHost(),
+        config->getDbPort(),
+        config->getDbUser(),
+        config->getDbPassword(),
+        config->getDbName()
     );
     Content::Storage s(&db_conn);
 
