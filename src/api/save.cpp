@@ -18,7 +18,6 @@ namespace Content::API
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
 
         resp->writeHead("HTTP/1.1 204 No Content");
-        resp->addHeader("Server", "service-content/1.0.0");
         resp->reply();
     }
 }

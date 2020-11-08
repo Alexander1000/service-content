@@ -7,6 +7,8 @@ Content::Config* config = nullptr;
 
 Content::API::SaveHandler* saveHandler = nullptr;
 
+Content::Middleware::Chain* chain = nullptr;
+
 void on_request(Socketer::Request* request, Socketer::Response* resp);
 
 int main(int argc, char** argv) {
@@ -27,6 +29,13 @@ int main(int argc, char** argv) {
     );
     Content::Storage s(&db_conn);
 
+    // initialize middleware
+    chain = new Content::Middleware::Chain;
+
+    // add middleware AddServer
+    Content::Middleware::AddServer addServer;
+    chain->chain.emplace_back((Content::Middleware::Middleware*) &addServer);
+
     // initialize server
     Socketer::Socketer server;
 
@@ -36,11 +45,21 @@ int main(int argc, char** argv) {
     server.addHandler(
         "/v1/save",
         [](Socketer::Request* request, Socketer::Response* resp) {
+            // first call middleware chain
+            chain->on_request(request, resp);
+            // call api handler
             saveHandler->on_request(request, resp);
         }
     );
 
-    server.setDefaultHandler(on_request);
+    server.setDefaultHandler(
+        [](Socketer::Request* request, Socketer::Response* resp) {
+            // first call middleware chain
+            chain->on_request(request, resp);
+            // run default handler
+            on_request(request, resp);
+        }
+    );
 
     server.dispatch();
 
@@ -69,6 +88,5 @@ void on_request(Socketer::Request* request, Socketer::Response* resp) {
     s.save_content(&content_id, (char*) "test title", (char*) "text of content", 1);
 
     resp->writeHead("HTTP/1.1 204 No Content");
-    resp->addHeader("Server", "service-content/1.0.0");
     resp->reply();
 }

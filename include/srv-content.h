@@ -7,5 +7,6 @@
 #include <srv-content/connection.h>
 #include <srv-content/storage.h>
 #include <srv-content/api/save.h>
+#include <srv-content/middleware.h>
 
 #endif
