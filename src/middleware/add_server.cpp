@@ -4,6 +4,6 @@ namespace Content::Middleware
 {
     void AddServer::on_request(Socketer::Request *req, Socketer::Response *resp)
     {
-        resp->addHeader("Server", "service-content/1.0.0");
+        resp->addHeader("Server", std::string("service-content/") + SERVICE_VERSION);
     }
 }
