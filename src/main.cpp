@@ -12,7 +12,7 @@ Content::Config* config = nullptr;
 
 Content::API::SaveHandler* saveHandler = nullptr;
 
-void on_request(Socketer::Request* request, int socket);
+void on_request(Socketer::Request* request, Socketer::Response* resp);
 
 int main(int argc, char** argv) {
     config = new Content::Config(argc, argv);
@@ -40,8 +40,8 @@ int main(int argc, char** argv) {
     saveHandler = new Content::API::SaveHandler(&s);
     server.addHandler(
         "/v1/save",
-        [](Socketer::Request* request, int socket) {
-            saveHandler->on_request(request, socket);
+        [](Socketer::Request* request, Socketer::Response* resp) {
+            saveHandler->on_request(request, resp);
         }
     );
 
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void on_request(Socketer::Request* request, int socket) {
+void on_request(Socketer::Request* request, Socketer::Response* resp) {
     std::cout << request->raw_body << std::endl;
 
     std::string method(request->method);
@@ -73,11 +73,7 @@ void on_request(Socketer::Request* request, int socket) {
     int content_id = 7;
     s.save_content(&content_id, (char*) "test title", (char*) "text of content", 1);
 
-    std::string http_response = "HTTP/1.1 204 No Content\r\n";
-    write(socket, http_response.c_str(), sizeof(char) * http_response.length());
-
-    std::string http_server = "Server: service-content/1.0.0\r\n";
-    write(socket, http_server.c_str(), sizeof(char) * http_server.length());
-
-    write(socket, "\r\n\r\n", sizeof(char) * 4);
+    resp->writeHead("HTTP/1.1 204 No Content");
+    resp->addHeader("Server", "service-content/1.0.0");
+    resp->reply();
 }

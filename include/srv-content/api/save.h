@@ -10,7 +10,7 @@ namespace Content::API
     {
     public:
         SaveHandler(Content::Storage* storage);
-        void on_request(Socketer::Request* request, int socket);
+        void on_request(Socketer::Request* request, Socketer::Response* resp);
 
     private:
         Content::Storage* storage;
