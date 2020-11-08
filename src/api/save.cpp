@@ -1,8 +1,6 @@
 #include <iostream>
 #include <socketer.h>
 #include <srv-content.h>
-#include <unistd.h>
-#include <string>
 
 namespace Content::API
 {
