@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": ["integer", "null"],
+      "description": "identifier of content, null - if create new content"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of content"
+    },
+    "text": {
+      "type": "string",
+      "description": "content"
+    },
+    "userId": {
+      "type": "integer",
+      "description": "Identifier of user who change or create this content"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "text",
+    "userId"
+  ],
+  "additionalProperties": false
+}
