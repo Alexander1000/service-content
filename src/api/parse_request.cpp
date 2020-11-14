@@ -38,6 +38,15 @@ namespace Content::API
                     memcpy(reqSave->title, title->c_str(), title->length() * sizeof(char));
                 }
             }
+            if (obj->find("text") != obj->end()) {
+                auto elText = obj->at("text");
+                if (elText->getType() == ELEMENT_TYPE_TEXT) {
+                    auto text = (std::string*) elText->getData();
+                    reqSave->text = new char[text->length()];
+                    memset(reqSave->text, 0, text->length());
+                    memcpy(reqSave->text, text->c_str(), text->length() * sizeof(char));
+                }
+            }
         }
 
         return reqSave;

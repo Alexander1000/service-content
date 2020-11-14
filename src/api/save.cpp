@@ -33,8 +33,15 @@ namespace Content::API
 
         std::cout << "/v1/save called" << std::endl;
 
-        std::cout << "ID: " << reqSave->id << std::endl;
-        std::cout << "Title: " << reqSave->title << std::endl;
+        if (reqSave->id != nullptr) {
+            std::cout << "ID: " << *reqSave->id << std::endl;
+        }
+        if (reqSave->title != nullptr) {
+            std::cout << "Title: " << reqSave->title << std::endl;
+        }
+        if (reqSave->text != nullptr) {
+            std::cout << "Text: " << reqSave->text << std::endl;
+        }
 
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
 
