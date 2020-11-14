@@ -12,6 +12,7 @@ set(SRV_CONTENT_SOURCES
     src/config.cpp
     src/api/save.cpp
     src/middleware/add_server.cpp
+    src/models/content.cpp
 )
 
 include_directories(
