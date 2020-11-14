@@ -29,9 +29,12 @@ namespace Content::API
             return;
         }
 
-        this->parse_request(request);
+        RequestSave* reqSave = this->parse_request(request);
 
         std::cout << "/v1/save called" << std::endl;
+
+        std::cout << "ID: " << reqSave->id << std::endl;
+        std::cout << "Title: " << reqSave->title << std::endl;
 
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
 

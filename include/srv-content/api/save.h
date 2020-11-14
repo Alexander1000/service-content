@@ -9,6 +9,8 @@ namespace Content::API
     class RequestSave
     {
     public:
+        RequestSave();
+
         int* id;
         char* title;
         char* text;
