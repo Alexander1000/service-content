@@ -46,6 +46,12 @@ namespace Content::API
             std::cout << "UserId: " << *reqSave->userId << std::endl;
         }
 
+        this->storage->save_content(reqSave->id, reqSave->title, reqSave->text, *reqSave->userId);
+
+        if (reqSave->id != nullptr) {
+            std::cout << "ID: " << *reqSave->id << std::endl;
+        }
+
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
 
         resp->writeHead("HTTP/1.1 200 OK");
