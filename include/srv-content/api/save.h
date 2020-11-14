@@ -14,7 +14,7 @@ namespace Content::API
         int* id;
         char* title;
         char* text;
-        int user_id;
+        int* userId;
     };
 
     class SaveHandler

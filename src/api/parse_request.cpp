@@ -47,6 +47,15 @@ namespace Content::API
                     memcpy(reqSave->text, text->c_str(), text->length() * sizeof(char));
                 }
             }
+            if (obj->find("userId") != obj->end()) {
+                auto elUserId = obj->at("userId");
+                if (elUserId->getType() == ELEMENT_TYPE_NUMERIC) {
+                    auto sUserId = (std::string*) elUserId->getData();
+                    int userId = atoi(sUserId->c_str());
+                    reqSave->userId = new int;
+                    *reqSave->userId = userId;
+                }
+            }
         }
 
         return reqSave;

@@ -6,6 +6,6 @@ namespace Content::API
         this->id = nullptr;
         this->title = nullptr;
         this->text = nullptr;
-        this->user_id = 0;
+        this->userId = nullptr;
     }
 }

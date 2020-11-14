@@ -42,6 +42,9 @@ namespace Content::API
         if (reqSave->text != nullptr) {
             std::cout << "Text: " << reqSave->text << std::endl;
         }
+        if (reqSave->userId != nullptr) {
+            std::cout << "UserId: " << *reqSave->userId << std::endl;
+        }
 
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
 
