@@ -15,7 +15,8 @@ namespace Content::API
 
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
 
-        resp->writeHead("HTTP/1.1 204 No Content");
+        resp->writeHead("HTTP/1.1 200 OK");
+        resp->write((void*) "Hello world", 11);
         resp->reply();
     }
 }
