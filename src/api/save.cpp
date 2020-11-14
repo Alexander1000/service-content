@@ -19,6 +19,18 @@ namespace Content::API
             resp->reply();
             return;
         }
+
+        if (std::string(request->headers["Content-Type"]) != "application/json") {
+            resp->writeHead("HTTP/1.1 405 Method not allowed");
+            resp->addHeader("Content-Type", "application/json");
+            std::string errResp = "{\"error\":{\"code\":405,\"message\":\"Method not allowed\"}}";
+            resp->write((void*) errResp.c_str(), errResp.length());
+            resp->reply();
+            return;
+        }
+
+        this->parse_request(request);
+
         std::cout << "/v1/save called" << std::endl;
 
         std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
