@@ -6,6 +6,15 @@
 
 namespace Content::API
 {
+    class RequestSave
+    {
+    public:
+        int* id;
+        char* title;
+        char* text;
+        int user_id;
+    };
+
     class SaveHandler
     {
     public:
@@ -14,6 +23,8 @@ namespace Content::API
 
     private:
         Content::Storage* storage;
+
+        RequestSave* parse_request(Socketer::Request* request);
     };
 }
 
