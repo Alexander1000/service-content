@@ -29,31 +29,31 @@ namespace Content::API
 
         RequestSave* reqSave = this->parse_request(request);
 
-        std::cout << "/v1/save called" << std::endl;
-
-        if (reqSave->id != nullptr) {
-            std::cout << "ID: " << *reqSave->id << std::endl;
-        }
-        if (reqSave->title != nullptr) {
-            std::cout << "Title: " << reqSave->title << std::endl;
-        }
-        if (reqSave->text != nullptr) {
-            std::cout << "Text: " << reqSave->text << std::endl;
-        }
-        if (reqSave->userId != nullptr) {
-            std::cout << "UserId: " << *reqSave->userId << std::endl;
-        }
-
-        this->storage->save_content(reqSave->id, reqSave->title, reqSave->text, *reqSave->userId);
-
-        if (reqSave->id != nullptr) {
-            std::cout << "ID: " << *reqSave->id << std::endl;
-        }
-
-        std::cout << "Raw body: [" << request->raw_body << "]" << std::endl;
+        int contentId = this->storage->save_content(reqSave->id, reqSave->title, reqSave->text, *reqSave->userId);
 
         resp->writeHead("HTTP/1.1 200 OK");
-        resp->write((void*) "Hello world", 11);
+        resp->addHeader("Content-Type", "application/json; charset=utf-8");
+
+        // response body
+        std::string strId = std::to_string(contentId);
+        JsonStreamAnalyzer::Element elId(ELEMENT_TYPE_NUMERIC, &strId);
+
+        JsonObject resultObj;
+        resultObj["contentId"] = &elId;
+
+        JsonStreamAnalyzer::Element elErrObj(ELEMENT_TYPE_OBJECT, &resultObj);
+
+        JsonObject responseObj;
+        responseObj["result"] = &elErrObj;
+
+        JsonStreamAnalyzer::Element elResponse(ELEMENT_TYPE_OBJECT, &responseObj);
+
+        JsonStreamAnalyzer::Encoder encoder;
+
+        std::string* strResult = encoder.encode(&elResponse);
+
+        resp->write((void*) strResult->c_str(), strResult->length());
+
         resp->reply();
     }
 }

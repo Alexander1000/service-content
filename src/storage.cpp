@@ -9,7 +9,7 @@ namespace Content
         this->db_conn = db_conn;
     }
 
-    void Storage::save_content(int* content_id, char* title, char* text, int user_id)
+    int Storage::save_content(int* content_id, char* title, char* text, int user_id)
     {
         pqxx::connection* conn = this->db_conn->get_conn();
         pqxx::work txn{*conn};
@@ -72,5 +72,7 @@ namespace Content
         txn.exec0(query);
 
         txn.commit();
+
+        return *content_id;
     }
 }
