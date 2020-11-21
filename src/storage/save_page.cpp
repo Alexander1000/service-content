@@ -14,20 +14,19 @@ namespace Content
             return false;
         }
 
+        char* query = new char[1024];
+        memset(query, 0, sizeof(char) * 1024);
+
         if (pageId != nullptr) {
-            char* query = new char[1024];
-            memset(query, 0, sizeof(char) * 1024);
             sprintf(
                 query,
                 "update pages set slug = %s, content_id = %d where page_id = %d",
-                txn.quote(slug).c_str(),
+                slug != nullptr ? txn.quote(slug).c_str() : "NULL",
                 *contentId,
                 *pageId
             );
             txn.exec(query);
         } else {
-            char* query = new char[1024];
-            memset(query, 0, sizeof(char) * 1024);
             sprintf(
                 query,
                 "insert into pages(content_id, slug, created_at) values(%d, %s, now())",
