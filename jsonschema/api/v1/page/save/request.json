@@ -3,7 +3,7 @@
   "properties": {
     "oneOf": [
       {
-        "pageId": {
+        "id": {
           "type": "integer"
         },
         "contentId": {
