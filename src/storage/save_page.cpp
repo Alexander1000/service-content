@@ -20,7 +20,7 @@ namespace Content
         if (pageId != nullptr) {
             sprintf(
                 query,
-                "update pages set slug = %s, content_id = %d where page_id = %d",
+                "update pages set slug = %s, content_id = %d where id = %d",
                 slug != nullptr ? txn.quote(slug).c_str() : "NULL",
                 *contentId,
                 *pageId
