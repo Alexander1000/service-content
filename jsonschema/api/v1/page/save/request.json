@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "oneOf": [
+      {
+        "pageId": {
+          "type": "integer"
+        },
+        "contentId": {
+          "type": "integer"
+        }
+      },
+      {
+        "slug": {
+          "type": "string"
+        },
+        "contentId": {
+          "type": "integer"
+        }
+      }
+    ]
+  }
+}

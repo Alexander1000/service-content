@@ -14,6 +14,9 @@ set(SRV_CONTENT_SOURCES
     src/api/parse_request.cpp
     src/api/request_save.cpp
     src/api/error_response.cpp
+    src/api/page/save.cpp
+    src/api/page/error_response.cpp
+    src/api/page/request_save.cpp
     src/middleware/add_server.cpp
     src/models/content.cpp
 )

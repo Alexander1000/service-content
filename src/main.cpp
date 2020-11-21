@@ -6,6 +6,7 @@
 Content::Config* config = nullptr;
 
 Content::API::SaveHandler* saveHandler = nullptr;
+Content::API::Page::SaveHandler* pageSaveHandler = nullptr;
 
 void on_request(Socketer::Request* request, Socketer::Response* resp);
 
@@ -40,6 +41,14 @@ int main(int argc, char** argv) {
         [](Socketer::Request* request, Socketer::Response* resp) {
             // call api handler
             saveHandler->on_request(request, resp);
+        }
+    );
+
+    pageSaveHandler = new Content::API::Page::SaveHandler(&s);
+    server.addHandler(
+        "/v1/page/save",
+        [](Socketer::Request* request, Socketer::Response* response) {
+            pageSaveHandler->on_request(request, response);
         }
     );
 
