@@ -36,6 +36,8 @@ namespace Content
             txn.exec(query);
         }
 
+        txn.commit();
+
         return true;
     }
 }
