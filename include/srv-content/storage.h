@@ -6,8 +6,9 @@
 namespace Content {
     class Storage {
     public:
-        Storage(DBConn* db_conn);
+        explicit Storage(DBConn* db_conn);
         int save_content(int* content_id, char* title, char* text, int user_id);
+        bool save_page(int* pageId, char* slug, int* contentId);
 
     private:
         DBConn* db_conn;
