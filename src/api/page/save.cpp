@@ -1,4 +1,5 @@
 #include <srv-content.h>
+#include <json-stream-analyzer.h>
 
 namespace Content::API::Page
 {
@@ -26,8 +27,27 @@ namespace Content::API::Page
 
         RequestSave* reqSave = this->parse_request(request);
 
+        bool saveResult = this->storage->save_page(reqSave->id, reqSave->slug, reqSave->contentId);
+
+        JsonStreamAnalyzer::Element elSuccess(ELEMENT_TYPE_BOOL, (void*) saveResult);
+
+        JsonObject resultObj;
+        resultObj["success"] = &elSuccess;
+
+        JsonStreamAnalyzer::Element elErrObj(ELEMENT_TYPE_OBJECT, &resultObj);
+
+        JsonObject responseObj;
+        responseObj["result"] = &elErrObj;
+
+        JsonStreamAnalyzer::Element elResponse(ELEMENT_TYPE_OBJECT, &responseObj);
+
+        JsonStreamAnalyzer::Encoder encoder;
+
+        std::string* strResult = encoder.encode(&elResponse);
+
         resp->writeHead("HTTP/1.1 200 OK");
         resp->addHeader("Content-Type", "application/json; charset=utf-8");
+        resp->write((void*) strResult->c_str(), strResult->length());
         resp->reply();
     }
 }
