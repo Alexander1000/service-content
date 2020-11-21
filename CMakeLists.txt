@@ -8,6 +8,7 @@ project(service-content)
 set(SRV_CONTENT_SOURCES
     src/main.cpp
     src/storage.cpp
+    src/storage/save_page.cpp
     src/connection.cpp
     src/config.cpp
     src/api/save.cpp
