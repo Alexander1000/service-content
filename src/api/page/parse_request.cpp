@@ -33,8 +33,8 @@ namespace Content::API::Page
                 auto elSlug = obj->at("slug");
                 if (elSlug->getType() == ELEMENT_TYPE_TEXT) {
                     auto slug = (std::string*) elSlug->getData();
-                    reqSave->slug = new char[slug->length()];
-                    memset(reqSave->slug, 0, slug->length());
+                    reqSave->slug = new char[slug->length() + 1];
+                    memset(reqSave->slug, 0, (slug->length() + 1) * sizeof(char));
                     memcpy(reqSave->slug, slug->c_str(), slug->length() * sizeof(char));
                 }
             }

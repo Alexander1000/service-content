@@ -1,3 +1,4 @@
+#include <iostream>
 #include <srv-content.h>
 
 namespace Content
