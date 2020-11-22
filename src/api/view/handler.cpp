@@ -25,6 +25,10 @@ namespace Content::API::View
             return;
         }
 
+        auto reqView = Content::API::View::Handler::parse_request(request);
+
+        auto view = this->storage->get_view_by_slug(reqView->slug);
+
         response->writeHead("HTTP/1.1 200 OK");
         response->addHeader("Content-Type", "application/json; charset=utf-8");
         response->reply();

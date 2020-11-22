@@ -20,6 +20,7 @@ namespace Content::API::View
     private:
         Content::Storage* storage;
         void error_response(Socketer::Response* resp, int code, char* message);
+        static Request* parse_request(Socketer::Request* request);
     };
 }
 
