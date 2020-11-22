@@ -4,7 +4,14 @@
 namespace Content::Model
 {
     class View
-    {};
+    {
+    public:
+        int id;
+        char* slug;
+        int* contentId;
+        char* title;
+        char* text;
+    };
 }
 
 #endif

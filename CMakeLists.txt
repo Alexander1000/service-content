@@ -10,6 +10,7 @@ set(SRV_CONTENT_SOURCES
     src/storage/init.cpp
     src/storage/save_page.cpp
     src/storage/save_content.cpp
+    src/storage/get_view_by_slug.cpp
     src/connection.cpp
     src/config.cpp
     src/api/content/save.cpp
