@@ -21,8 +21,41 @@ namespace Content
             txn.quote(slug).c_str()
         );
 
-        pqxx::row row = txn.exec1(query);
+        auto result = txn.exec(query);
 
-        return nullptr;
+        auto row = result.begin();
+
+        if (row == result.end()) {
+            return nullptr;
+        }
+
+        auto column = row.begin();
+
+        auto view = new Content::Model::View;
+
+        view->id = column.as<int>();
+
+        column++;
+        if (!column.is_null()) {
+            view->slug = (char*) column.c_str();
+        }
+
+        column++;
+        if (!column.is_null()) {
+            view->contentId = new int;
+            *view->contentId = column.as<int>();
+        }
+
+        column++;
+        if (!column.is_null()) {
+            view->title = (char*) column.c_str();
+        }
+
+        column++;
+        if (!column.is_null()) {
+            view->text = (char*) column.c_str();
+        }
+
+        return view;
     }
 }
