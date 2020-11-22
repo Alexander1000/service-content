@@ -29,6 +29,14 @@ namespace Content::API::View
 
         auto view = this->storage->get_view_by_slug(reqView->slug);
 
+        if (view == nullptr) {
+            response->writeHead("HTTP/1.1 404 Not found");
+            response->addHeader("Content-Type", "application/json");
+            this->error_response(response, 404, (char*) "Not found");
+            response->reply();
+            return;
+        }
+
         response->writeHead("HTTP/1.1 200 OK");
         response->addHeader("Content-Type", "application/json; charset=utf-8");
         response->reply();
