@@ -10,6 +10,7 @@ set(SRV_CONTENT_SOURCES
     src/storage/init.cpp
     src/storage/save_page.cpp
     src/storage/save_content.cpp
+    src/storage/get_view_by_slug.cpp
     src/connection.cpp
     src/config.cpp
     src/api/content/save.cpp
@@ -20,8 +21,13 @@ set(SRV_CONTENT_SOURCES
     src/api/page/error_response.cpp
     src/api/page/request_save.cpp
     src/api/page/parse_request.cpp
+    src/api/view/handler.cpp
+    src/api/view/error_response.cpp
+    src/api/view/parse_request.cpp
+    src/api/view/encode_view_to_json.cpp
     src/middleware/add_server.cpp
     src/models/content.cpp
+    src/models/view.cpp
 )
 
 include_directories(

@@ -8,6 +8,7 @@
 #include <srv-content/storage.h>
 #include <srv-content/api/content/save.h>
 #include <srv-content/api/page/save.h>
+#include <srv-content/api/view.h>
 #include <srv-content/middleware.h>
 
 #endif

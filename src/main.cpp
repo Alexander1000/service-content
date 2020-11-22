@@ -7,6 +7,7 @@ Content::Config* config = nullptr;
 
 Content::API::SaveHandler* saveHandler = nullptr;
 Content::API::Page::SaveHandler* pageSaveHandler = nullptr;
+Content::API::View::Handler* viewHandler = nullptr;
 
 void on_request(Socketer::Request* request, Socketer::Response* resp);
 
@@ -49,6 +50,14 @@ int main(int argc, char** argv) {
         "/v1/page/save",
         [](Socketer::Request* request, Socketer::Response* response) {
             pageSaveHandler->on_request(request, response);
+        }
+    );
+
+    viewHandler = new Content::API::View::Handler(&s);
+    server.addHandler(
+        "/v1/view",
+        [](Socketer::Request* request, Socketer::Response* response) {
+            viewHandler->on_request(request, response);
         }
     );
 
