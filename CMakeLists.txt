@@ -12,10 +12,10 @@ set(SRV_CONTENT_SOURCES
     src/storage/save_content.cpp
     src/connection.cpp
     src/config.cpp
-    src/api/save.cpp
-    src/api/parse_request.cpp
-    src/api/request_save.cpp
-    src/api/error_response.cpp
+    src/api/content/save.cpp
+    src/api/content/parse_request.cpp
+    src/api/content/request_save.cpp
+    src/api/content/error_response.cpp
     src/api/page/save.cpp
     src/api/page/error_response.cpp
     src/api/page/request_save.cpp

@@ -6,7 +6,7 @@
 #include <srv-content/config.h>
 #include <srv-content/connection.h>
 #include <srv-content/storage.h>
-#include <srv-content/api/save.h>
+#include <srv-content/api/content/save.h>
 #include <srv-content/api/page/save.h>
 #include <srv-content/middleware.h>
 

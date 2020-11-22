@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 
     saveHandler = new Content::API::SaveHandler(&s);
     server.addHandler(
-        "/v1/save",
+        "/v1/content/save",
         [](Socketer::Request* request, Socketer::Response* resp) {
             // call api handler
             saveHandler->on_request(request, resp);
