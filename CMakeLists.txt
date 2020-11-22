@@ -21,6 +21,7 @@ set(SRV_CONTENT_SOURCES
     src/api/page/request_save.cpp
     src/api/page/parse_request.cpp
     src/api/view/handler.cpp
+    src/api/view/error_response.cpp
     src/middleware/add_server.cpp
     src/models/content.cpp
 )
