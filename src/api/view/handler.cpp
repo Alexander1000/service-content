@@ -39,6 +39,19 @@ namespace Content::API::View
 
         response->writeHead("HTTP/1.1 200 OK");
         response->addHeader("Content-Type", "application/json; charset=utf-8");
+
+        auto elView = Content::API::View::Handler::encode_view_to_json(view);
+
+        auto objResponse = new JsonObject;
+        (*objResponse)["result"] = elView;
+
+        auto elResponse = new JsonStreamAnalyzer::Element(ELEMENT_TYPE_OBJECT, objResponse);
+
+        JsonStreamAnalyzer::Encoder encoder;
+        auto strResponse = encoder.encode(elResponse);
+
+        response->write((void*) strResponse->c_str(), strResponse->length());
+
         response->reply();
     }
 }
