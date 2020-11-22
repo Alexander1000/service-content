@@ -23,7 +23,7 @@ namespace Content::API::View
         Content::Storage* storage;
         void error_response(Socketer::Response* resp, int code, char* message);
         static Request* parse_request(Socketer::Request* request);
-        JsonStreamAnalyzer::Element* encode_view_to_json(Content::Model::View* view);
+        static JsonStreamAnalyzer::Element* encode_view_to_json(Content::Model::View* view);
     };
 }
 
