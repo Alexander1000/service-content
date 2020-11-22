@@ -1,14 +1,8 @@
 #include <pqxx/pqxx>
 #include <srv-content/storage.h>
-#include <srv-content/connection.h>
 
 namespace Content
 {
-    Storage::Storage(DBConn* db_conn)
-    {
-        this->db_conn = db_conn;
-    }
-
     int Storage::save_content(int* content_id, char* title, char* text, int user_id)
     {
         pqxx::connection* conn = this->db_conn->get_conn();
