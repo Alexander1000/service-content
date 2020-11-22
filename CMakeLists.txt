@@ -24,6 +24,7 @@ set(SRV_CONTENT_SOURCES
     src/api/view/handler.cpp
     src/api/view/error_response.cpp
     src/api/view/parse_request.cpp
+    src/api/view/encode_view_to_json.cpp
     src/middleware/add_server.cpp
     src/models/content.cpp
     src/models/view.cpp
