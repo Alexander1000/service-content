@@ -24,6 +24,7 @@ set(SRV_CONTENT_SOURCES
     src/api/view/error_response.cpp
     src/middleware/add_server.cpp
     src/models/content.cpp
+    src/models/view.cpp
 )
 
 include_directories(
