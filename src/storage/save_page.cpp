@@ -3,7 +3,8 @@
 
 namespace Content
 {
-    bool Storage::save_page(const int *pageId, const char *slug, const int *contentId) {
+    bool Storage::save_page(const int *pageId, const char *slug, const int *contentId)
+    {
         pqxx::connection* conn = this->db_conn->get_conn();
         pqxx::work txn{*conn};
 
