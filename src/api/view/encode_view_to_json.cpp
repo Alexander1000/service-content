@@ -8,8 +8,9 @@ namespace Content::API::View
 
         auto objView = new JsonObject;
 
-        std::string strId = std::to_string(view->id);
-        auto elId = new JsonStreamAnalyzer::Element(ELEMENT_TYPE_NUMERIC, &strId);
+        auto strId = new std::string;
+        *strId = std::to_string(view->id);
+        auto elId = new JsonStreamAnalyzer::Element(ELEMENT_TYPE_NUMERIC, strId);
         (*objView)["id"] = elId;
 
         if (view->slug != nullptr) {
@@ -22,8 +23,9 @@ namespace Content::API::View
         }
 
         if (view->contentId != nullptr) {
-            std::string strContentId = std::to_string(*view->contentId);
-            auto elContentId = new JsonStreamAnalyzer::Element(ELEMENT_TYPE_NUMERIC, &strContentId);
+            auto strContentId = new std::string;
+            *strContentId = std::to_string(*view->contentId);
+            auto elContentId = new JsonStreamAnalyzer::Element(ELEMENT_TYPE_NUMERIC, strContentId);
             (*objView)["contentId"] = elContentId;
         } else {
             (*objView)["contentId"] = new JsonStreamAnalyzer::Element(ELEMENT_TYPE_NULL, nullptr);
