@@ -37,7 +37,10 @@ namespace Content
 
         column++;
         if (!column.is_null()) {
-            view->slug = (char*) column.c_str();
+            const char* srcSlug = column.c_str();
+            view->slug = new char[strlen(srcSlug) + 1];
+            memset(view->slug, 0, (strlen(srcSlug) + 1) * sizeof(char));
+            memcpy(view->slug, srcSlug, strlen(srcSlug));
         }
 
         column++;
@@ -48,12 +51,18 @@ namespace Content
 
         column++;
         if (!column.is_null()) {
-            view->title = (char*) column.c_str();
+            const char* srcTitle = column.c_str();
+            view->title = new char[strlen(srcTitle) + 1];
+            memset(view->title, 0, (strlen(srcTitle) + 1) * sizeof(char));
+            memcpy(view->title, srcTitle, strlen(srcTitle));
         }
 
         column++;
         if (!column.is_null()) {
-            view->text = (char*) column.c_str();
+            const char* strText = column.c_str();
+            view->text = new char[strlen(strText) + 1];
+            memset(view->text, 0, (strlen(strText) + 1) * sizeof(char));
+            memcpy(view->text, strText, strlen(strText));
         }
 
         return view;
