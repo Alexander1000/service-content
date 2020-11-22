@@ -25,7 +25,7 @@ namespace Content::API::Page
     private:
         Content::Storage* storage;
 
-        RequestSave* parse_request(Socketer::Request* request);
+        static RequestSave* parse_request(Socketer::Request* request);
 
         void error_response(Socketer::Response* resp, int code, char* message);
     };
